@@ -79,6 +79,36 @@ module.exports = {
         test: /\.less/,
         use: getCssLoaders(2),
       },
+      {
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              /**
+               * 如果大于 10k 就不用url-loader而转用file-loader
+               * 转为base64会减少http请求，但是base64比原图大
+               */
+              limit: 10 * 1024,
+              // 文件名 hash 后缀
+              name: '[name].[contenthash:8].[ext]',
+              outputPath: 'assets/images',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot|otf)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[contenthash:8].[ext]',
+              outputPath: 'assets/fonts',
+            },
+          },
+        ],
+      },
     ],
   },
 };
