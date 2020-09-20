@@ -1,6 +1,6 @@
-# my-react
+# webpack
 
-react 脚手架!!!!
+webpack 基础部分
 
 ## git commit
 
