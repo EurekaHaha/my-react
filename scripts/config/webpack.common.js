@@ -1,6 +1,45 @@
 const { resolve } = require('path');
 const { isDev, PROJECT_PATH, PROJECT_NAME } = require('../constant');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const getCssLoaders = (importLoaders) => [
+  'style-loader',
+  {
+    // https://github.com/webpack-contrib/css-loader
+    loader: 'css-loader',
+    options: {
+      modules: false,
+      sourceMap: isDev,
+      importLoaders, // 在csslodaer前使用的loader数量 less sass之类的需要在css-loader前使用
+    },
+  },
+  {
+    loader: 'postcss-loader',
+    options: {
+      ident: 'postcss',
+      plugins: [
+        /**
+         * 修复一些和 flex 布局相关的 bug
+         * https://github.com/luisrudge/postcss-flexbugs-fixes
+         */
+        require('postcss-flexbugs-fixes'),
+        /**
+         * 将最新的 CSS 语法转换为目标环境的浏览器能够理解的 CSS 语法，目的是使开发者不用考虑浏览器兼容问题。我们使用autoprefixer来自动添加浏览器头。
+         * https://github.com/csstools/postcss-preset-env
+         */
+        require('postcss-preset-env')({
+          autoprefixer: {
+            grid: true,
+            flexbox: 'no-2009',
+          },
+          stage: 3,
+        }),
+        // require('postcss-normalize'), 从 browserslist 中自动导入所需要的 normalize.css 内容。 感觉没啥用
+      ],
+      sourceMap: isDev,
+    },
+  },
+];
+
 console.log(PROJECT_NAME, PROJECT_PATH, HtmlWebpackPlugin);
 
 module.exports = {
@@ -34,38 +73,11 @@ module.exports = {
          * 3. 数组既可以是字符串也可以是一个用于配置的object
          *
          */
-        use: [
-          'style-loader',
-          {
-            // https://github.com/webpack-contrib/css-loader
-            loader: 'css-loader',
-            options: {
-              module: false,
-              sourceMap: isDev,
-              importLoaders: 0, // 在csslodaer前使用的loader数量 less sass之类的需要在css-loader前使用
-            },
-          },
-        ],
+        use: getCssLoaders(1),
       },
       {
         test: /\.less/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              modules: false,
-              sourceMap: isDev,
-              importLoaders: 1, // 需要先被less-loader处理
-            },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: isDev,
-            },
-          },
-        ],
+        use: getCssLoaders(2),
       },
     ],
   },
