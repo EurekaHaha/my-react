@@ -45,13 +45,20 @@ console.log(PROJECT_NAME, PROJECT_PATH, HtmlWebpackPlugin);
 module.exports = {
   // 入口
   entry: {
-    app: resolve(PROJECT_PATH, './src/app.js'),
+    app: resolve(PROJECT_PATH, './src/index.tsx'),
     // app: path.resolve(PROJECT_PATH, './src/app.js'),
   },
   // 出口
   output: {
     filename: `js/[name]${isDev ? '' : '.[hash:8]'}.js`,
     path: resolve(PROJECT_NAME, '../dist'),
+  },
+  resolve: {
+    /**
+     * 当代码按 import App from './app' 写时
+     * 会按照以下顺序加载
+     */
+    extensions: ['.tsx', '.ts', '.js', '.json'],
   },
   // 插件
   plugins: [
@@ -64,6 +71,14 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.(tsx?|js)$/,
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+        },
+        exclude: /node_modules/,
+      },
       {
         test: /\.css/,
         /**

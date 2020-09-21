@@ -39,5 +39,6 @@ module.exports = {
   rules: {
     // 具体添加的其他规则大家可查看我的 github 查看
     // https://github.com/vortesnail/react-ts-quick-starter/blob/master/.eslintrc.js
+    'react/jsx-filename-extension': [WARN, { extensions: ['.tsx', 'ts', '.jsx', 'js'] }],
   },
 };
