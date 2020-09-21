@@ -42,7 +42,7 @@ module.exports = {
     'react/jsx-filename-extension': [WARN, { extensions: ['.tsx', 'ts', '.jsx', 'js'] }],
     'no-use-before-define': WARN,
     'import/extensions': [
-      WARN,
+      OFF,
       'ignorePackages',
       {
         ts: 'never',
