@@ -59,6 +59,14 @@ module.exports = {
      * 会按照以下顺序加载
      */
     extensions: ['.tsx', '.ts', '.js', '.json'],
+    /**
+     * 映射关系
+     */
+    alias: {
+      Src: resolve(PROJECT_PATH, './src'),
+      Components: resolve(PROJECT_PATH, './src/components'),
+      Utils: resolve(PROJECT_PATH, './src/utils'),
+    },
   },
   // 插件
   plugins: [
