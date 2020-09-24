@@ -10,8 +10,9 @@
     "@babel/preset-react",
     "@babel/preset-typescript"
   ],
-  "plungins": [
+  "plugins": [
     [
+      // 转化promise等新特性
       "@babel/plugin-transform-runtime",
       {
         "corejs": {
