@@ -3,6 +3,8 @@ const { isDev, PROJECT_PATH, PROJECT_NAME } = require('../constant');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WebpackBar = require('webpackbar');
+// 有问题
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const getCssLoaders = (importLoaders) => [
   'style-loader',
   {
@@ -92,7 +94,17 @@ module.exports = {
       name: isDev ? '正在启动' : '正在打包',
       color: '#fa8c16',
     }),
+    // new ForkTsCheckerWebpackPlugin({
+    //   typescript: {
+    //     configFile: resolve(PROJECT_PATH, './tsconfig.json'),
+    //   },
+    // }),
+    new HardSourceWebpackPlugin(),
   ],
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM',
+  // },
   module: {
     rules: [
       {
