@@ -1,6 +1,7 @@
 const { resolve } = require('path');
 const { isDev, PROJECT_PATH, PROJECT_NAME } = require('../constant');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const WebpackBar = require('webpackbar');
 // 有问题
